@@ -1,9 +1,10 @@
 
 # 😎 linkJS 😎
 
+A Link Finder Written in GO
+
 **Version 1.0**
 
-#### A Link Finder Written in GO
 
 
 ### Install
