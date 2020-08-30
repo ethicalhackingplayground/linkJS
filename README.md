@@ -7,7 +7,10 @@
 
 
 ### Install
-$ go get -u github.com/ethicalhackingplayground/linkJS
+
+**`$ go get -u github.com/ethicalhackingplayground/linkJS`**
+
+**`$ go get github.com/003random/getJS`**
 
 
 ### Fetch Links from JS with Subfinder
