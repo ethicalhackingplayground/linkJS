@@ -28,20 +28,17 @@ func main () {
 	var mode string
 		
 	flag.IntVar(&concurrency, "c", 30, "Set concurrency for greater speed")
-	flag.StringVar(&mode, "m", "", "Set the regex to use (e.g. links,awskeys,domxss,endpoints)")
+	flag.StringVar(&mode, "m", "links", "Set the regex to use (e.g. links,awskeys,domxss,endpoints)")
 	flag.Parse()
 
-	if mode != "" {
-
-		var wg sync.WaitGroup
-		for i:=0; i<=concurrency; i++ {
-			wg.Add(1)
-			go func () {
-				search_with_regex(mode, regs)
-				wg.Done()	
-			}()
-			wg.Wait()
-		}
+	var wg sync.WaitGroup
+	for i:=0; i<=concurrency; i++ {
+		wg.Add(1)
+		go func () {
+			search_with_regex(mode, regs)
+			wg.Done()	
+		}()
+		wg.Wait()
 	}
 }
 
