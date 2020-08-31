@@ -13,7 +13,7 @@ A Link Finder Written in GO
  - awskeys
  - domxss
  - endpoints
- - domains
+ - links
 ***
 
 
@@ -25,7 +25,7 @@ A Link Finder Written in GO
 
 
 ### Fetch Links from JS with Subfinder
-**`$ subfinder uber.com -silent | httpx | getJS -complete | linkJS`**
+**`$ subfinder uber.com -silent | httpx | getJS -complete | linkJS -m links`**
 
 ![GitHub Logo](carbon.png)
 
