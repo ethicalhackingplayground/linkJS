@@ -6,6 +6,16 @@ A Link Finder Written in GO
 **Version 1.0**
 
 
+***
+### Changes
+
+**It now Matches:**
+ - awskeys
+ - domxss
+ - endpoints
+ - domains
+***
+
 
 ### Install
 
