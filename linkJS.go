@@ -8,6 +8,7 @@ import (
 "os"
 "bufio"
 "net/http"
+"net/url"
 "io/ioutil"
 "flag"
 )
@@ -19,7 +20,6 @@ func main () {
 		"links"    : `(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]`,
 		"awskeys"  : `([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}`,
 		"domxss"   : `/((src|href|data|location|code|value|action)\s*["'\]]*\s*\+?\s*=)|((replace|assign|navigate|getResponseHeader|open(Dialog)?|showModalDialog|eval|evaluate|execCommand|execScript|setTimeout|setInterval)\s*["'\]]*\s*\()/`,
-		"endpoints" : `^/[^/]+/[^/]+/[^/]+/[^/]+/$`,
 	}
 
 
@@ -78,7 +78,7 @@ func search_with_regex(mode string, regs map[string]string) {
 			re:=regexp.MustCompile(regs["links"])
 			match:=re.FindStringSubmatch(bodyString)
 			if match != nil {
-				fmt.Printf("%q\n", match[0])
+				fmt.Printf("%s\n", match[0])
 			}
 		}
 
@@ -88,17 +88,20 @@ func search_with_regex(mode string, regs map[string]string) {
                         re:=regexp.MustCompile(regs["apis"])
                         match:=re.FindStringSubmatch(bodyString)
                         if match != nil {
-                                fmt.Printf("%q\n", match[0])
+                                fmt.Printf("%s\n", match[0])
                         }
                 }
 
 		// Check to see if we are searching for endpoints
                 if mode == "endpoints" {
                         // Search for all links
-                        re:=regexp.MustCompile(regs["endpoints"])
+                        re:=regexp.MustCompile(regs["links"])
                         match:=re.FindStringSubmatch(bodyString)
                         if match != nil {
-                                fmt.Printf("%q\n", match[0])
+				endpoint:=match[0]
+				u,err:=url.Parse(endpoint)
+				if err != nil { return }
+                                fmt.Printf("%s\n", u.Path)
                         }
                 }
 
@@ -108,7 +111,7 @@ func search_with_regex(mode string, regs map[string]string) {
                         re:=regexp.MustCompile(regs["domxss"])
                         match:=re.FindStringSubmatch(bodyString)
                         if match != nil {
-                                fmt.Printf("%q : \t\t%q\n", match[0], jsLink)
+                                fmt.Printf("%s : \t\t%q\n", match[0], jsLink)
                         }
                 }
 
